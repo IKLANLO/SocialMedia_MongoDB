@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  socialmediaapi:
+    container_name: socialmediaapi
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/api-root/src
+    healthcheck:
+      disable: true
+    restart: unless-stopped
+    # mapeamos el mismo puerto en el que se levanta el servidor, si no da error en postman
+    ports:
+      - 8080:8080
+    tty: true
+
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ilandaberea
+      MONGO_INITDB_ROOT_PASSWORD: tuBS2uN9so8zyyk0
+      MONGO_INITDB_DATABASE: SocialMediaDB
