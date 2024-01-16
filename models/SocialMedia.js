@@ -15,8 +15,9 @@ const SocialMediaSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  }
-  // posts se añadirá posteriormente
+  },
+  tokens: [],
+  posts: []
 }, { timestamps: true })
 
 const SocialMedia = mongoose.model('SocialMedia', SocialMediaSchema)
