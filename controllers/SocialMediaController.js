@@ -46,6 +46,18 @@ const SocialMediaController = {
       console.log(error);
       res.status(500).send({message: 'Error creating the token'})
     }
+  },
+
+  async logout(req, res){
+    try {
+      await SocialMedia.findByIdAndUpdate(req.user._conditions._id, {
+        $pull: { tokens: req.headers.authorization }
+      })
+      res.status(201).send({message: 'user disconnected successfully'})
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'Error trying to disconnect the user'})
+    }
   }
 }
 
