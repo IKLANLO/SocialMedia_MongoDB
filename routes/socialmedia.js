@@ -6,7 +6,7 @@ const { fieldsCheck } = require('../middlewares/fieldscheck')
 
 router.post('/', fieldsCheck, SocialMediaController.createUser)
 router.get('/', SocialMediaController.getAll)
-router.post('/login', authentication, SocialMediaController.login)
+router.post('/login', SocialMediaController.login)
 router.delete('/logout', authentication, SocialMediaController.logout)
 
 module.exports = router

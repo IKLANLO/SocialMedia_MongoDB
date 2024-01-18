@@ -1,3 +1,4 @@
 module.exports = {
-  MONGO_URI: 'mongodb+srv://user:password@cluster0.go55oju.mongodb.net/databasename?retryWrites=true&w=majority'
+  MONGO_URI: 'mongodb+srv://user:password@cluster0.go55oju.mongodb.net/databasename?retryWrites=true&w=majority',
+  jwt_secret: 'aquítucódigo'
 }
