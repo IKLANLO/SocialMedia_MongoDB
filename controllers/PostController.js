@@ -40,6 +40,17 @@ const PostController = {
       console.log(error)
       res.status(500).send({message: 'error trying to delete the post'})
     }
+  },
+
+  async getPostById(req, res){
+    try {
+      const posts = await Posts.findById(req.params._id)
+      if (!posts) return res.status(400).send({message: 'No posts with that id'})
+      res.status(200).send(posts)
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to find posts'})
+    }
   }
 }
 
