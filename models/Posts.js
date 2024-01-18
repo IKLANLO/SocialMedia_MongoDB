@@ -6,6 +6,7 @@ const PostsSchema = new mongoose.Schema({
     type: ObjectId,
     ref: 'SocialMedia'
   },
+  name: String,
   post: String
 }, { timestamps: true })
 

@@ -51,6 +51,17 @@ const PostController = {
       console.log(error)
       res.status(500).send({message: 'error trying to find posts'})
     }
+  },
+
+  async getPostByName(req, res){
+    try {
+      const posts = await Posts.find({ name: req.params.name })
+      if (!posts) return res.status(400).send({message: 'No posts with that name'})
+      res.status(200).send(posts)
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to find posts'})
+    }
   }
 }
 
