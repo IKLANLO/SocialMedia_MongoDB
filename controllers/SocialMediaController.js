@@ -1,6 +1,9 @@
 const SocialMedia = require('../models/SocialMedia')
+const Posts = require('../models/Posts')
+
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { get } = require('mongoose')
 const { jwt_secret } = require('../config/keys')
 
 async function checkUser(req){
@@ -57,6 +60,16 @@ const SocialMediaController = {
     } catch (error) {
       console.log(error)
       res.status(500).send({message: 'Error trying to disconnect the user'})
+    }
+  },
+
+  async getAllData(req, res){
+    try {
+      const users = await SocialMedia.find().populate('postIds')
+      res.status(200).send(users)
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error requesting data'})
     }
   }
 }

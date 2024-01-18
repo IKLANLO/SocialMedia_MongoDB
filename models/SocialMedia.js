@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const ObjectId = mongoose.SchemaTypes.ObjectId
+
 const SocialMediaSchema = new mongoose.Schema({
   first_name: {
     type: String,
@@ -16,7 +18,8 @@ const SocialMediaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  tokens: []
+  tokens: [],
+  postIds: [{type: ObjectId, ref: 'Posts'}]
 }, { timestamps: true })
 
 const SocialMedia = mongoose.model('SocialMedia', SocialMediaSchema)

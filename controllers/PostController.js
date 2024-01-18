@@ -1,4 +1,5 @@
 const Posts = require('../models/Posts')
+const SocialMedia = require('../models/SocialMedia')
 
 const PostController = {
   async createPost(req, res){
@@ -8,6 +9,7 @@ const PostController = {
         ...req.body,
         userId: req.user._conditions._id
       })
+      await SocialMedia.findByIdAndUpdate(req.user._conditions._id, { $push: { postIds: post._id } })
       res.status(201).send({message: 'post created sucessfully', post})
     } catch (error) {
       console.log(error)
