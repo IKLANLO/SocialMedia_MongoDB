@@ -25,10 +25,20 @@ const PostController = {
           new: true
         }
       )
-      res.status(201).send({message: 'post successfully updated', post})
+      res.status(201).send({message: 'post updated successfully', post})
     } catch (error) {
       console.log(error)
       res.status(500).send({message: 'error trying to update the post'})
+    }
+  },
+
+  async deletePost(req, res){
+    try {
+      await Posts.findByIdAndDelete(req.params._id)
+      res.status(200).send({message: 'post deleted successfully'})
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to delete the post'})
     }
   }
 }
