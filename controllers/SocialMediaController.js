@@ -1,5 +1,4 @@
 const SocialMedia = require('../models/SocialMedia')
-// const Posts = require('../models/Posts')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -28,7 +27,11 @@ const SocialMediaController = {
   async getAll(req, res){
     try {
       // console.log('holaaa');
+      // añadida paginación
+      const { page = 1, limit = 10 } = req.query
       const socialmedia = await SocialMedia.find()
+      .limit(limit)
+      .skip((page - 1) * limit)
       res.status(200).send(socialmedia)
     } catch (error) {
       console.log(error)
@@ -65,8 +68,11 @@ const SocialMediaController = {
 
   async getAllData(req, res){
     try {
-
+      // añadida paginación
+      const { page = 1, limit = 10 } = req.query
       const users = await SocialMedia.find().populate('postIds')
+      .limit(limit)
+      .skip((page - 1) * limit)
       res.status(200).send(users)
     } catch (error) {
       console.log(error)
