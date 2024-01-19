@@ -1,5 +1,5 @@
 const SocialMedia = require('../models/SocialMedia')
-const Posts = require('../models/Posts')
+// const Posts = require('../models/Posts')
 
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -65,6 +65,7 @@ const SocialMediaController = {
 
   async getAllData(req, res){
     try {
+
       const users = await SocialMedia.find().populate('postIds')
       res.status(200).send(users)
     } catch (error) {

@@ -64,6 +64,20 @@ const PostController = {
       console.log(error)
       res.status(500).send({message: 'error trying to find posts'})
     }
+  },
+
+  async insertComment(req, res){
+    try {
+      const post = await Posts.findByIdAndUpdate(
+        req.params._id,
+        { $push: { comments: { comment: req.body.comment, userId: req.user._id }}},
+        { new: true }
+      )
+      res.status(201).send({message: 'comment successfully added', post})
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to add that comment'})
+    }
   }
 }
 
