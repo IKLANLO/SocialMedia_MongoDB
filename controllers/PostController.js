@@ -96,12 +96,14 @@ const PostController = {
 
   async deleteLike(req, res){
     try {
-      // await Posts.findByIdAndUpdate(
-      //   req.params._id,
-      //   { $pull: { likes: req.params._id } },
-      //   { new: true }
-      // )
-      
+      // elimina el like bien si pertenece al usuario que lo dio, si no no lo hace, pero si lo intenta otro user 
+      // también da mensaje de que se eliminó. También da ese mensaje aunque ya no exista el like
+      const post = await Posts.findByIdAndUpdate(
+        req.params._id,
+        { $pull: { likes: { userId: req.user._conditions._id } }},
+        { new: true }
+      )
+      res.status(200).send({message: 'like successfully deleted', post})
     } catch (error) {
       console.log(error)
       res.status(500).send({message: 'error trying to delete the like'})
