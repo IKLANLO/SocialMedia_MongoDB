@@ -7,6 +7,9 @@ const PostsSchema = new mongoose.Schema({
   comments: [{
     userId: { type: ObjectId, ref: 'SocialMedia'},
     comment: String
+  }],
+  likes: [{ 
+    userId: {type: ObjectId, ref: 'SocialMedia'} 
   }]
 }, { timestamps: true })
 

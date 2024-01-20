@@ -47,7 +47,7 @@ const PostController = {
   async getPostById(req, res){
     try {
       const posts = await Posts.findById(req.params._id)
-      if (!posts) return res.status(400).send({message: 'No posts with that id'})
+      if (!posts) return res.status(400).send({message: 'No posts with the id'})
       res.status(200).send(posts)
     } catch (error) {
       console.log(error)
@@ -76,7 +76,35 @@ const PostController = {
       res.status(201).send({message: 'comment successfully added', post})
     } catch (error) {
       console.log(error)
-      res.status(500).send({message: 'error trying to add that comment'})
+      res.status(500).send({message: 'error trying to add the comment'})
+    }
+  },
+
+  async addLike(req, res){
+    try {
+      const post = await Posts.findByIdAndUpdate(
+        req.params._id,
+        { $push: { likes: {userId: req.user._conditions._id } } },
+        { new: true }
+      )
+      res.status(201).send({message: 'like successfully added', post})
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to add the like'})
+    }
+  },
+
+  async deleteLike(req, res){
+    try {
+      // await Posts.findByIdAndUpdate(
+      //   req.params._id,
+      //   { $pull: { likes: req.params._id } },
+      //   { new: true }
+      // )
+      
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to delete the like'})
     }
   }
 }

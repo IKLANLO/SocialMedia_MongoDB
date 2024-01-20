@@ -21,7 +21,8 @@ const SocialMediaSchema = new mongoose.Schema({
     required: true,
   },
   tokens: [],
-  postIds: [{type: ObjectId, ref: 'Posts'}]
+  postIds: [{type: ObjectId, ref: 'Posts'}],
+  wishList: [{ type: ObjectId, ref: 'Posts' }]
 }, { timestamps: true })
 
 const SocialMedia = mongoose.model('SocialMedia', SocialMediaSchema)
