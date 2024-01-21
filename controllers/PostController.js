@@ -1,7 +1,5 @@
 const Posts = require('../models/Posts')
 const SocialMedia = require('../models/SocialMedia')
-const mongoose = require('mongoose')
-const ObjectId = mongoose.SchemaTypes.ObjectId
 
 const PostController = {
   async createPost(req, res){
@@ -89,6 +87,11 @@ const PostController = {
         { $push: { likes: {userId: req.user._conditions._id } } },
         { new: true }
       )
+      await SocialMedia.findByIdAndUpdate(
+        req.user._conditions._id,
+        { $push: { wishList: req.params._id } },
+        { new: true }
+      )
       res.status(201).send({message: 'like successfully added', post})
     } catch (error) {
       console.log(error)
@@ -103,6 +106,11 @@ const PostController = {
       const post = await Posts.findByIdAndUpdate(
         req.params._id,
         { $pull: { likes: { userId: req.user._conditions._id } }},
+        { new: true }
+      )
+      await SocialMedia.findByIdAndUpdate(
+        req.user._conditions._id,
+        { $pull: { wishList: req.params._id } },
         { new: true }
       )
       res.status(200).send({message: 'like successfully deleted', post})
