@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const PostController = require('../controllers/postController.js')
+const PostController = require('../controllers/PostController.js')
 const { authentication, isAuthor } = require('../middlewares/authentication.js')
 const { postFieldsCheck, likeCheck } = require('../middlewares/fieldscheck.js')
 
