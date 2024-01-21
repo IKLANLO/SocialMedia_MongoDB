@@ -1,5 +1,7 @@
 const Posts = require('../models/Posts')
 const SocialMedia = require('../models/SocialMedia')
+const mongoose = require('mongoose')
+const ObjectId = mongoose.SchemaTypes.ObjectId
 
 const PostController = {
   async createPost(req, res){
@@ -96,8 +98,8 @@ const PostController = {
 
   async deleteLike(req, res){
     try {
-      // elimina el like bien si pertenece al usuario que lo dio, si no no lo hace, pero si lo intenta otro user 
-      // también da mensaje de que se eliminó. También da ese mensaje aunque ya no exista el like
+      const likeCheck = await Posts.findById(req.params._id).find({'likes': { $elemMatch: { userId: req.user._conditions._id } }})
+      if(likeCheck.length === 0) return res.status(400).send({message: 'you can`t delete the like'})
       const post = await Posts.findByIdAndUpdate(
         req.params._id,
         { $pull: { likes: { userId: req.user._conditions._id } }},
