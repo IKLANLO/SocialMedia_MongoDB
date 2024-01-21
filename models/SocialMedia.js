@@ -25,6 +25,13 @@ const SocialMediaSchema = new mongoose.Schema({
   wishList: [{ type: ObjectId, ref: 'Posts' }]
 }, { timestamps: true })
 
+SocialMediaSchema.methods.toJSON = function() {
+  const user = this._doc
+  delete user.tokens
+  delete user.password
+  return user
+}
+
 const SocialMedia = mongoose.model('SocialMedia', SocialMediaSchema)
 
 module.exports = SocialMedia
