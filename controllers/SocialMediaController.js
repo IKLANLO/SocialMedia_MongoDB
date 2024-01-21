@@ -24,7 +24,6 @@ const SocialMediaController = {
 
   async getAll(req, res){
     try {
-      // console.log('holaaa');
       // añadida paginación
       const { page = 1, limit = 10 } = req.query
       const socialmedia = await SocialMedia.find()
