@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const ObjectId = mongoose.SchemaTypes.ObjectId
+
 const SocialMediaSchema = new mongoose.Schema({
   first_name: {
     type: String,
@@ -11,13 +13,24 @@ const SocialMediaSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    match: [/.+\@.+\..+/],
+    unique: true
   },
   password: {
     type: String,
     required: true,
-  }
-  // posts se añadirá posteriormente
+  },
+  tokens: [],
+  postIds: [{type: ObjectId, ref: 'Posts'}],
+  wishList: [{ type: ObjectId, ref: 'Posts' }]
 }, { timestamps: true })
+
+SocialMediaSchema.methods.toJSON = function() {
+  const user = this._doc
+  delete user.tokens
+  delete user.password
+  return user
+}
 
 const SocialMedia = mongoose.model('SocialMedia', SocialMediaSchema)
 
