@@ -20,9 +20,10 @@ const authentication = async (req, res, next) => {
 const isAuthor = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params._id)
+    console.log('post ' + post);
     // const post = await SocialMedia.find().find({ 'postIds': {$elemMatch: { '_id': req.params._id }} })
     if (!post) return res.status(403).send({message: 'the post id does not exist'})
-    if (post.userId.toString() !== req.user._conditions._id) {
+    if (post.userId.toString() !== req.user._conditions._id.toString()) {
       return res.status(403).send({message: 'this is not your post'})
     }
     next()

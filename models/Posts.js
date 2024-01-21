@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const ObjectId = mongoose.SchemaTypes.ObjectId
 
 const PostsSchema = new mongoose.Schema({
+  userId: String,
   name: String,
   post: String,
   comments: [{
