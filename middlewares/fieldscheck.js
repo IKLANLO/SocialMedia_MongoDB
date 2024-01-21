@@ -1,4 +1,3 @@
-const SocialMedia = require('../models/SocialMedia')
 const Post = require('../models/Posts')
 
 const fieldsCheck = async (req, res, next) => {

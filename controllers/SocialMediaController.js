@@ -1,9 +1,7 @@
+require('dotenv').config()
 const SocialMedia = require('../models/SocialMedia')
-
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { get } = require('mongoose')
-const { jwt_secret } = require('../config/keys')
 
 async function checkUser(req){
   return await SocialMedia.findOne({email: req})
@@ -43,7 +41,7 @@ const SocialMediaController = {
     try {
       const user = await checkUser(req.body.email)
       if (!user) return res.status(500).send({message: `User doesn't exists, choose another email`})
-      const token = jwt.sign({_id: user._id}, jwt_secret)
+      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
       if(user.tokens.length > 4) user.tokens.shift()
       user.tokens.push(token)
       await user.save()

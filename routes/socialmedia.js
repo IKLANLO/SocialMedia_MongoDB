@@ -3,7 +3,6 @@ const router = express.Router()
 const SocialMediaController = require('../controllers/SocialMediaController')
 const { authentication } = require('../middlewares/authentication')
 const { fieldsCheck } = require('../middlewares/fieldscheck')
-const SocialMedia = require('../models/SocialMedia')
 
 router.post('/', fieldsCheck, SocialMediaController.createUser)
 router.get('/', SocialMediaController.getAll)
