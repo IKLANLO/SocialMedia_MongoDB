@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const PostController = require('../controllers/postController')
-const { authentication, isAuthor } = require('../middlewares/authentication')
-const { postFieldsCheck, likeCheck } = require('../middlewares/fieldscheck')
+const PostController = require('../controllers/postController.js')
+const { authentication, isAuthor } = require('../middlewares/authentication.js')
+const { postFieldsCheck, likeCheck } = require('../middlewares/fieldscheck.js')
 
 router.post('/', authentication, postFieldsCheck, PostController.createPost)
 router.put('/update/:_id', authentication, isAuthor, PostController.updatePost)
