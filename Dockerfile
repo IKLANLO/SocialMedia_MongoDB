@@ -2,10 +2,10 @@
 FROM node:18-alpine as builder
 
 # Crea el directorio de trabajo en /root/src
-RUN mkdir -p /root
+RUN mkdir -p /root/src
 
 # Establece el directorio de trabajo en /root/src
-WORKDIR /root
+WORKDIR /root/src
 
 # Copia los archivos de configuración
 COPY ["package.json", "package-lock.json", "./"]
