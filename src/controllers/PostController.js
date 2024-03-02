@@ -44,6 +44,17 @@ const PostController = {
     }
   },
 
+  async getAllPosts(req, res){
+    try {
+      const posts = await Posts.find()
+      if (!posts) return res.status(400).send({message: 'No posts'})
+      res.status(200).send(posts)
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to find posts'})
+    }
+  },
+
   async getPostById(req, res){
     try {
       const posts = await Posts.findById(req.params._id)
