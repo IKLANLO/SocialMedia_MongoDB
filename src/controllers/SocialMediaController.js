@@ -25,7 +25,6 @@ const SocialMediaController = {
   async getAll(req, res){
     try {
       // añadida paginación
-      //A
       const { page = 1, limit = 10 } = req.query
       const socialmedia = await SocialMedia.find()
       .limit(limit)
@@ -45,7 +44,7 @@ const SocialMediaController = {
       if(user.tokens.length > 4) user.tokens.shift()
       user.tokens.push(token)
       await user.save()
-      res.send({message: `Hello ${user.first_name}`, token})
+      res.send({message: `Hello ${user.first_name}`, token, user})
     } catch (error) {
       console.log(error);
       res.status(500).send({message: 'Error creating the token'})
@@ -74,6 +73,15 @@ const SocialMediaController = {
       res.status(200).send(users)
     } catch (error) {
       console.log(error)
+      res.status(500).send({message: 'error requesting data'})
+    }
+  },
+
+  async getUser(req, res) {
+    try {
+      const user = await SocialMedia.findOne({tokens: req.headers['authorization']})
+      res.status(200).send(user)
+    } catch (error) {
       res.status(500).send({message: 'error requesting data'})
     }
   }

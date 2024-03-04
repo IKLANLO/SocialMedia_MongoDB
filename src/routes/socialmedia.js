@@ -9,5 +9,6 @@ router.get('/', SocialMediaController.getAll)
 router.post('/login', SocialMediaController.login)
 router.delete('/logout', authentication, SocialMediaController.logout)
 router.get('/alldata', SocialMediaController.getAllData)
+router.get('/getUser', SocialMediaController.getUser)
 
 module.exports = router
