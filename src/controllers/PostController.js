@@ -77,6 +77,17 @@ const PostController = {
     }
   },
 
+  async getPostsByUser(req, res){
+    try {
+      const posts = await Posts.find({userId: req.params.id})
+      if (!posts) return res.status(400).send({message: 'No posts with that name'})
+      res.status(200).send(posts)
+    } catch (error) {
+      console.log(error)
+      res.status(500).send({message: 'error trying to find posts'})
+    }
+  },
+
   async insertComment(req, res){
     try {
       const post = await Posts.findByIdAndUpdate(
