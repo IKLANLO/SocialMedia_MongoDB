@@ -3,14 +3,22 @@ const SocialMedia = require('../models/SocialMedia')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-async function checkUser(req){
-  return await SocialMedia.findOne({email: req})
+async function checkUser(req, res){
+  console.log('req.email', req.email, req.password)
+  try {
+    const resul = await SocialMedia.findOne({email: req.email})
+    const isMatch = bcrypt.compareSync(req.password, resul.password)
+    if (!isMatch) return res.status(400).send({message: `User or password doesn't exists, choose another email or password`})
+    return resul
+  } catch (error) {
+    console.error(error)
+  }
 }
 
 const SocialMediaController = {
   async createUser(req, res){
     try {
-      const check = await checkUser(req.body.email)
+      const check = await checkUser(req.body)
       if(check) return res.status(500).send({message: 'User already exists, choose another email'})
       if(!req.body.password) res.status(400).send({message: 'Password required'})
       const password = bcrypt.hashSync(req.body.password, 10)
@@ -38,8 +46,8 @@ const SocialMediaController = {
 
   async login(req, res){
     try {
-      const user = await checkUser(req.body.email)
-      if (!user) return res.status(500).send({message: `User doesn't exists, choose another email`})
+      const user = await checkUser(req.body)
+      if (!user) return res.status(500).send({message: `User or password doesn't exists, choose another email or password`})
       const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
       if(user.tokens.length > 4) user.tokens.shift()
       user.tokens.push(token)
