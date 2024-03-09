@@ -14,6 +14,8 @@ router.get('/userId/:id', PostController.getPostsByUser)
 router.put('/comments/:_id', authentication, PostController.insertComment)
 router.put('/likes/:_id', authentication, likeCheck, PostController.addLike)
 router.put('/likes/delete/:_id', authentication, PostController.deleteLike)
+router.put('/likes/:_id',  likeCheck, PostController.addLike)
+router.put('/likes/delete/:_id', PostController.deleteLike)
 
 
 module.exports = router

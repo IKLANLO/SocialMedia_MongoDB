@@ -16,7 +16,7 @@ const postFieldsCheck = async (req, res, next) => {
 
 const likeCheck = async (req, res, next) => {
   const post = await Post.findById(req.params._id) 
-  const check = post.likes.find((like) =>  like.userId.equals(req.user._conditions._id))
+  const check = post.likes.find((like) =>  like.userId?.equals(req.user._conditions._id))
   if (check) return res.status(401).send({message: 'this user has already liked the post'})
   next()
 }
