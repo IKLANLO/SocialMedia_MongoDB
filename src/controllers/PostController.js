@@ -68,7 +68,8 @@ const PostController = {
 
   async getPostByName(req, res){
     try {
-      const posts = await Posts.find({ name: req.params.name })
+      const name = new RegExp(req.params.name, 'i')
+      const posts = await Posts.find({ name })
       if (!posts) return res.status(400).send({message: 'No posts with that name'})
       res.status(200).send(posts)
     } catch (error) {
