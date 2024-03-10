@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 async function checkUser(req, res){
-  console.log('req.email', req.email, req.password)
   try {
     const resul = await SocialMedia.findOne({email: req.email})
     const isMatch = bcrypt.compareSync(req.password, resul.password)
